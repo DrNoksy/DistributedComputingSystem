@@ -23,7 +23,6 @@ namespace DistributedComputingSystem.MainSystem.Web
 		
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
 			if (env.IsDevelopment()) {
-				app.UseBrowserLink();
 				app.UseDeveloperExceptionPage();
 			}
 			app.UseStaticFiles();

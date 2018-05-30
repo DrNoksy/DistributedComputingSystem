@@ -62,18 +62,29 @@ namespace DistributedComputingSystem.MainSystem
 			Console.WriteLine($"Main system has been deployed successfully.");
 		}
 
+		public async Task<CSharpTaskCompletionResult> RunTask(string taskContent) {
+			var scriptTask = new CSharpScriptTask(taskContent);
+			return await RunTask(scriptTask);
+		}
+
 		public async Task<CSharpTaskCompletionResult> RunTask(CSharpScriptTask scriptTask) {
+			if (scriptTask.Id == default(Guid)) {
+				scriptTask.Id = Guid.NewGuid();
+			}
 			var taskCompletionSource = new TaskCompletionSource<CSharpTaskCompletionResult>();
 			var executionContext = new CSharpScriptExecutionContext(scriptTask, taskCompletionSource);
 			_resultsDispatchActorRef.Tell(executionContext);
 			var worker = _workersBalancer.GetNextWorkerDeplInfo();
 			var actor = _actorSystem.ActorOf(_workerRouters[worker]);
 			actor.Tell(scriptTask);
-			return await taskCompletionSource.Task;
+			CSharpTaskCompletionResult result = await taskCompletionSource.Task;
+			scriptTask.CompletionResult = result;
+			return result;
 		}
 
 		public void Dispose() {
 			_actorSystem.Dispose();
+			_instance = null;
 		}
 	}
 }

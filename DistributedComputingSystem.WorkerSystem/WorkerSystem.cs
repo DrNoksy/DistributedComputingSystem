@@ -37,6 +37,7 @@ namespace DistributedComputingSystem.WorkerSystem
 
 		public void Dispose() {
 			_actorSystem.Dispose();
+			_instance = null;
 		}
 	}
 }

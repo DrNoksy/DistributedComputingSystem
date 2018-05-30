@@ -24,10 +24,7 @@ namespace DistributedComputingSystem.MainSystem.TestingConsole
 
 			using (var mainSystem = MainSystem.DelpoyInstance(workerDeploymentInfos)) {
 				Parallel.ForEach(ipAddresses, ip => {
-					var scriptTask = new CSharpScriptTask(@"
-						return new Random().NextDouble();
-					");
-					CSharpTaskCompletionResult result = mainSystem.RunTask(scriptTask).Result;
+					CSharpTaskCompletionResult result = mainSystem.RunTask("return new Random().NextDouble();").Result;
 					Console.WriteLine($"Random result of {ip}: {(result.Success ? "succes" : "failure")} - {result.Message}");
 				});
 				Console.WriteLine($"Press any key to STOP main system...");

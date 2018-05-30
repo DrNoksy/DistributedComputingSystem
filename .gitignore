@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /DistributedComputingSystem.WorkerSystem/Properties/PublishProfiles
 /DistributedComputingSystem.MainSystem.TestingConsole/Properties/PublishProfiles
+/DistributedComputingSystem.MainSystem.Web/Properties/PublishProfiles

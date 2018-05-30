@@ -1,0 +1,54 @@
+﻿@model DistributedComputingSystem.Shared.CSharpScriptTask
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Run task</title>
+    <style>
+        html {
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        body {
+            height: calc(100% - 22px);
+            margin: 8px;
+        }
+
+        form {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        textarea {
+            flex-grow: 1;
+        }
+
+        input[type=submit] {
+            margin: 3px 0;
+            width: 100px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <form asp-action="RunTask" asp-controller="Tasks">
+        <textarea class="main-text-area" id="task-content" asp-for="Content" placeholder="Type your C# code here...">@Model.Content</textarea>
+        <input type="submit" value="Run" />
+        @if (Model.CompletionResult != null) {
+            <textarea class="main-text-area" id="task-result">@(string.IsNullOrWhiteSpace(Model.CompletionResult.Message) ? "<success>" : Model.CompletionResult.Message)</textarea>
+        }
+    </form>
+</body>
+</html>
