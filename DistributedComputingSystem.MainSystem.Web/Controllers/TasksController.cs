@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using DistributedComputingSystem.Shared;
+using Newtonsoft.Json;
 
 namespace DistributedComputingSystem.MainSystem.Web.Controllers
 {
@@ -41,8 +42,8 @@ namespace DistributedComputingSystem.MainSystem.Web.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult RunTask(string content) {
-			var scriptTask = new CSharpScriptTask(content);
+		public ActionResult RunTask() {
+			var scriptTask = new CSharpScriptTask();
 			return View("RunTask", scriptTask);
 		}
 
@@ -53,9 +54,19 @@ namespace DistributedComputingSystem.MainSystem.Web.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> PostTask(string taskContent) {
-			var completionResult = await _mainSystem.RunTask(taskContent);
+		public async Task<ActionResult> PostTask(string task) {
+			var completionResult = await _mainSystem.RunTask(task);
 			return Json(completionResult);
+		}
+
+		[HttpPost]
+		public ActionResult PostTasks(string tasks) {
+			CSharpTaskCompletionResult[] results = JsonConvert.DeserializeObject<string[]>(tasks)
+				.Select(content => _mainSystem.RunTask(content))
+				.ToArray()
+				.Select(t => t.Result)
+				.ToArray();
+			return Json(results);
 		}
 	}
 }
