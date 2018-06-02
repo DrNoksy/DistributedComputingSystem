@@ -2,14 +2,29 @@
 
 namespace DistributedComputingSystem.Shared
 {
+	/// <summary>
+	/// Клас-обгортка для задачі
+	/// </summary>
 	public class CSharpScriptTask
 	{
+		/// <summary>
+		/// Унікальний ідентифікатор.
+		/// </summary>
 		public Guid Id { get; set; }
 
+		/// <summary>
+		/// Назва.
+		/// </summary>
 		public string Name { get; set; }
 
+		/// <summary>
+		/// Код задачі.
+		/// </summary>
 		public string Content { get; set; }
 
+		/// <summary>
+		/// Результат виконання (якщо задача ще не виконана - <code>null</code>).
+		/// </summary>
 		public CSharpTaskCompletionResult CompletionResult { get; set; }
 
 		public CSharpScriptTask() { }

@@ -6,6 +6,9 @@ using Akka.Actor;
 
 namespace DistributedComputingSystem.Shared
 {
+	/// <summary>
+	/// Актор, що приймає і розподіляє результати задач.
+	/// </summary>
 	public class ResultsDispatchActor : ReceiveActor
 	{
 		private Dictionary<Guid, TaskCompletionSource<CSharpTaskCompletionResult>> _taskCompletitionSources =

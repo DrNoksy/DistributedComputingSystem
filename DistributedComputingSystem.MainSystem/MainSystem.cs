@@ -9,6 +9,9 @@ using DistributedComputingSystem.Shared;
 
 namespace DistributedComputingSystem.MainSystem
 {
+	/// <summary>
+	/// Клас для запуску головної системи, що розподіляє задачі між вузлазми.
+	/// </summary>
 	public class MainSystem : IDisposable
 	{
 		private const int InitialActorsCount = 10;
@@ -36,6 +39,11 @@ namespace DistributedComputingSystem.MainSystem
 
 		private MainSystem() { }
 
+		/// <summary>
+		/// Інстанціює головну систему, а якщо вона уже інстанійована - повертає її екземпляр.
+		/// </summary>
+		/// <param name="workerDeploymentInfos">Інформація про розгорнуті вузли "працівників".</param>
+		/// <returns>Екземпляр системи.</returns>
 		public static MainSystem DelpoyInstance(IEnumerable<WorkerDeploymentInfo> workerDeploymentInfos) {
 			if (_instance == null) {
 				_instance = new MainSystem();
@@ -62,11 +70,21 @@ namespace DistributedComputingSystem.MainSystem
 			Console.WriteLine($"Main system has been deployed successfully.");
 		}
 
+		/// <summary>
+		/// Відправляє задачу на виконання.
+		/// </summary>
+		/// <param name="taskContent">Код задачі, яку потрібно виконати.</param>
+		/// <returns>Об'єкт <see cref="System.Threading.Tasks.Task"/>, за допомогою якого можна отримати результат виконання.</returns>
 		public async Task<CSharpTaskCompletionResult> RunTask(string taskContent) {
 			var scriptTask = new CSharpScriptTask(taskContent);
 			return await RunTask(scriptTask);
 		}
 
+		/// <summary>
+		/// Відправляє задачу на виконання.
+		/// </summary>
+		/// <param name="scriptTask">Об'єкт задачі, яку потрібно виконати.</param>
+		/// <returns>Об'єкт <see cref="System.Threading.Tasks.Task"/>, за допомогою якого можна отримати результат виконання.</returns>
 		public async Task<CSharpTaskCompletionResult> RunTask(CSharpScriptTask scriptTask) {
 			if (scriptTask.Id == default(Guid)) {
 				scriptTask.Id = Guid.NewGuid();
@@ -82,6 +100,9 @@ namespace DistributedComputingSystem.MainSystem
 			return result;
 		}
 
+		/// <summary>
+		/// Вимикає інстанційовану систему.
+		/// </summary>
 		public void Dispose() {
 			_actorSystem.Dispose();
 			_instance = null;

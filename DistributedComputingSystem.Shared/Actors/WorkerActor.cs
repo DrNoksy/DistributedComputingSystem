@@ -4,6 +4,9 @@ using Akka.Actor;
 
 namespace DistributedComputingSystem.Shared
 {
+	/// <summary>
+	/// Актор, що виконує задачі.
+	/// </summary>
 	public class WorkerActor : ReceiveActor
 	{
 		public WorkerActor(IActorRef resultDispatchActorRef) {

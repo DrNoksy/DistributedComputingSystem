@@ -5,6 +5,9 @@ using DistributedComputingSystem.Shared;
 
 namespace DistributedComputingSystem.WorkerSystem
 {
+	/// <summary>
+	/// Клас робочої системи - системи, що виконує передані їй задачі.
+	/// </summary>
 	public class WorkerSystem : IDisposable
 	{
 		private static WorkerSystem _instance = null;
@@ -13,6 +16,11 @@ namespace DistributedComputingSystem.WorkerSystem
 
 		private WorkerSystem() { }
 
+		/// <summary>
+		/// Інстанціює робочу систему, а якщо вона уже інстанійована - повертає її екземпляр.
+		/// </summary>
+		/// <param name="ip"></param>
+		/// <returns></returns>
 		public static WorkerSystem DelpoyInstance(string ip) {
 			if (_instance == null) {
 				_instance = new WorkerSystem();
@@ -35,6 +43,9 @@ namespace DistributedComputingSystem.WorkerSystem
 			Console.WriteLine($"Worker system has been deployed successfully.");
 		}
 
+		/// <summary>
+		/// Вимикає інстанційовану систему.
+		/// </summary>
 		public void Dispose() {
 			_actorSystem.Dispose();
 			_instance = null;
