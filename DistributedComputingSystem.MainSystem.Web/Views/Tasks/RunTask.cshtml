@@ -44,10 +44,10 @@
 </head>
 <body>
     <form asp-action="RunTask" asp-controller="Tasks">
-        <textarea class="main-text-area" id="task-content" asp-for="Content" placeholder="Type your C# code here...">@Model.Content</textarea>
+        <textarea asp-for="Content" placeholder="Type your C# code here...">@Model.Content</textarea>
         <input type="submit" value="Run" />
         @if (Model.CompletionResult != null) {
-            <textarea class="main-text-area" id="task-result">@(string.IsNullOrWhiteSpace(Model.CompletionResult.Message) ? "<success>" : Model.CompletionResult.Message)</textarea>
+            <textarea>@(string.IsNullOrWhiteSpace(Model.CompletionResult.Message) ? "<success>" : Model.CompletionResult.Message)</textarea>
         }
     </form>
 </body>
