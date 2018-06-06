@@ -19,8 +19,8 @@ namespace DistributedComputingSystem.WorkerSystem
 		/// <summary>
 		/// Інстанціює робочу систему, а якщо вона уже інстанійована - повертає її екземпляр.
 		/// </summary>
-		/// <param name="ip"></param>
-		/// <returns></returns>
+		/// <param name="ip">IP-адреса для розгортування.</param>
+		/// <returns>Екземпляр системи.</returns>
 		public static WorkerSystem DelpoyInstance(string ip) {
 			if (_instance == null) {
 				_instance = new WorkerSystem();
